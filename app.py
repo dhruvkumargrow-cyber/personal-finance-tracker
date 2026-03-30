@@ -5,6 +5,26 @@ from datetime import datetime, timezone
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        "name": "Personal Finance Tracker API",
+        "version": "1.0",
+        "status": "running",
+        "endpoints": {
+            "health":   "GET  /health",
+            "register": "POST /register",
+            "login":    "POST /login",
+            "transactions": {
+                "add":     "POST   /transactions",
+                "get_all": "GET    /transactions",
+                "summary": "GET    /transactions/summary",
+                "delete":  "DELETE /transactions/<id>"
+            }
+        },
+        "docs": "github.com/dhruvkumargrow-cyber/personal-finance-tracker"
+    }), 200
+
 # ── Helper — extract user from token ──────────────────
 def get_current_user():
     auth_header = request.headers.get('Authorization')
